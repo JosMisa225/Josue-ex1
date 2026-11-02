@@ -54,8 +54,12 @@ export class LibroComponent {
 
       this.libros.push(nuevoLibro);
     } else {
+      if (this.titulo.trim() === '' || this.autor.trim() === '') {
+        alert("Ingrese todos los datos correctamente.")
+        return;
+      }
       this.libros[this.idEditar].titulo = this.titulo.trim();
-      this.libros[this.idEditar].autor= this.autor.trim();
+      this.libros[this.idEditar].autor = this.autor.trim();
     }
     this.guardarEnLS();
     this.limpiar();
@@ -71,6 +75,14 @@ export class LibroComponent {
     this.idEditar = i;
     this.titulo = this.libros[i].titulo;
     this.autor = this.libros[i].autor;
+  }
+
+  eliminar(i: number) {
+    if (confirm('¿Estas seguro?')) {
+      this.libros.splice(i, 1);
+      this.guardarEnLS();
+      this.limpiar();
+    }
   }
 
   guardarEnLS() {
