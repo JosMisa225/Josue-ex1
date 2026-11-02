@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,24 +10,17 @@ import { FormsModule} from '@angular/forms';
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  usuario='';
-  clave='';
-  sesionIn=false;
+  usuario = '';
+  clave = '';
 
-  iniciarSesion(){
-    if(this.usuario === 'admin123' && this.clave === '123456'){
+  constructor(private router: Router) { }
+
+  iniciarSesion() {
+    if (this.usuario === 'admin123' && this.clave === '123456') {
       localStorage.setItem('sesionBasica', 'si');
-      this.sesionIn=true;
-      this.clave='';
+      this.router.navigate(['/libro']);
     } else {
       alert('Usuario o clave incorrectos');
     }
-  }
-
-  cerrarsesion(){
-    localStorage.removeItem('sesionBasica');
-    this.sesionIn=false;
-    this.usuario='';
-    this.clave='';
   }
 }

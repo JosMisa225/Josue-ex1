@@ -1,0 +1,26 @@
+<main>
+    <h1>Registro de libros</h1>
+    <button type="button" (click)="cerrarSesion()">Iniciar Sesion</button>
+    <p>Total: {{libros.length}}</p>
+
+    <div class="tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titulo</th>
+                    <th>Autor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(libro of libros; track libro.id){
+                    <tr>
+                        <td>{{libro.id}}</td>
+                        <td>{{libro.titulo}}</td>
+                        <td>{{libro.autor}}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</main>
