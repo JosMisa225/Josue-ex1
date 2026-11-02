@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 interface Libro{
   id: number;
@@ -8,12 +9,15 @@ interface Libro{
 }
 @Component({
   selector: 'app-libro',
-   imports: [],
+   imports: [FormsModule],
   styleUrl: './libro.component.css',
   templateUrl: './libro.component.html'
 })
 export class LibroComponent {
   libros : Libro [] = [];
+
+  titulo='';
+  autor='';
 
   constructor(private router: Router) {
     if(localStorage.getItem('sesionBasica') !== 'si'){
@@ -25,6 +29,39 @@ export class LibroComponent {
     if(datos !== null){
       this.libros = JSON.parse(datos);
     }
+  }
+
+  guardar(){
+    if(this.titulo.trim() === '' || this.autor.trim() === ''){
+      alert("Ingrese todos los datos correctamente.")
+      return;
+    }
+
+    let idNuevo = 1;
+    for( const l of this.libros){
+      if(l.id >= idNuevo) {
+        idNuevo = l.id + 1;
+      }
+    }
+
+    const nuevoLibro: Libro = {
+      id: idNuevo,
+      titulo: this.titulo.trim(),
+      autor: this.autor.trim()
+    };
+
+    this.libros.push(nuevoLibro);
+    this.guardarEnLS();
+    this.limpiar();
+  }
+
+  limpiar() {
+    this.titulo ='';
+    this.autor='';
+  }
+
+  guardarEnLS(){
+    localStorage.setItem('libroBasico', JSON.stringify(this.libros));
   }
 
   cerrarSesion() {
